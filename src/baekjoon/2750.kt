@@ -1,4 +1,4 @@
-package baekjoon.datastructure
+package baekjoon
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
