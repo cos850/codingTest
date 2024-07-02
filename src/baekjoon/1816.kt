@@ -3,37 +3,20 @@ package baekjoon
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
-val primeNumbers  = mutableListOf<Long>()
-
 fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
-    // 일반적인 소인수분해를 하면 시간 초과 -> 에라토스테네스의 채를 활용해 최적화
-    val limit = 1000000
-    val isPrime = BooleanArray(limit + 1) { true }
-    isPrime[0] = false
-    isPrime[1] = false
-
-    for (i in 2..limit) {
-        if (isPrime[i]) {
-            primeNumbers.add(i.toLong())
-            var j = 2 * i
-            while (j <= limit) {
-                isPrime[j] = false
-                j += i
-            }
-        }
-    }
-
     repeat(readLine().toInt()) {
-        println(check(readLine().toLong()))
-    }
-}
+        val n = readLine().toLong()
 
-fun check(n: Long) : String {
-    for(prime in primeNumbers) {
-        if (prime * prime > n) break
-        if(n % prime == 0L) {
-            return "NO"
+        // 기존 시간 초과 로직은 while문을 통해 n을 소인수분해가 될 때까지 반복했다.
+        // 때문에 n이 소수일 경우 최대 O(n)이 되는데, n이 1억까지 오기 때문에 시간 초과가 발생한다.
+        // 변경한 이 코드는 n이 1억이 오더라도 100만까지만 반복하기 때문에 O(1)의 시간 복잡도를 가지게 되므로 시간 초과가 발생하지 않았다.
+        for(i in 2L .. 1000_000L) {
+            if(n%i == 0L) {
+                println("NO")
+                break
+            }
+            if(i==1000_000L)
+                println("YES")
         }
     }
-    return "YES"
 }
